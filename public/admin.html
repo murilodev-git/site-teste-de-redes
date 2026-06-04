@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Segurança</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+<h1>Dashboard de Segurança</h1>
+<a href="produtos.html">← Loja</a>
+</header>
+
+<div class="stats">
+
+    <div class="card">
+        <h2 id="totalTentativas"></h2>
+    </div>
+
+    <div class="card">
+        <h2 id="sucessos"></h2>
+    </div>
+
+    <div class="card">
+        <h2 id="falhas"></h2>
+    </div>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Usuário</th>
+<th>Resultado</th>
+<th>Data</th>
+</tr>
+</thead>
+
+<tbody id="logs"></tbody>
+
+</table>
+
+<script>
+
+async function carregar(){
+
+    const resposta =
+        await fetch('/logs');
+
+    const logs =
+        await resposta.json();
+
+    const sucessos =
+        logs.filter(
+            l => l.sucesso
+        ).length;
+
+    const falhas =
+        logs.filter(
+            l => !l.sucesso
+        ).length;
+
+    document
+    .getElementById('totalTentativas')
+    .innerHTML =
+    `Tentativas: ${logs.length}`;
+
+    document
+    .getElementById('sucessos')
+    .innerHTML =
+    `Sucessos: ${sucessos}`;
+
+    document
+    .getElementById('falhas')
+    .innerHTML =
+    `Falhas: ${falhas}`;
+
+    let html = '';
+
+    logs.forEach(log => {
+
+        html += `
+        <tr>
+
+        <td>${log.usuario}</td>
+
+        <td>
+        ${log.sucesso ? '✅' : '❌'}
+        </td>
+
+        <td>
+        ${new Date(log.data_hora)
+            .toLocaleString()}
+        </td>
+
+        </tr>
+        `;
+    });
+
+    document
+      .getElementById('logs')
+      .innerHTML = html;
+}
+
+carregar();
+
+</script>
+
+</body>
+</html>

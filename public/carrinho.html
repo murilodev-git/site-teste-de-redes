@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carrinho</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Meu Carrinho</h1>
+
+<div id="itens"></div>
+
+<script>
+
+const carrinho =
+    JSON.parse(localStorage.getItem('carrinho')) || [];
+
+document.getElementById('itens').innerHTML =
+    carrinho.length
+        ? carrinho.join('<br>')
+        : 'Carrinho vazio';
+
+</script>
+
+</body>
+</html>

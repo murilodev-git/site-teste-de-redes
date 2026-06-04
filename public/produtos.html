@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Produtos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Produtos</h1>
+
+<div id="lista"></div>
+
+<script>
+
+async function carregar(){
+
+    const resposta =
+        await fetch('/produtos');
+
+    const produtos =
+        await resposta.json();
+
+    let html = '';
+
+    produtos.forEach(p => {
+
+        html += `
+            <h3>${p.nome}</h3>
+            <p>R$ ${p.preco}</p>
+            <hr>
+        `;
+
+    });
+
+    document
+        .getElementById('lista')
+        .innerHTML = html;
+
+}
+
+carregar();
+
+</script>
+
+</body>
+</html>
