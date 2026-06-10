@@ -87,7 +87,9 @@ app.get('/logs', async (req, res) => {
 
     res.json(data);
 });
-
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/login.html');
+});
 app.listen(process.env.PORT || 3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
